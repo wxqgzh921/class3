@@ -15,14 +15,34 @@ console.log(buf.length) //字节的长度
 // 具备着数组的常用方法 forEach
 // toString()
 // 前端给服务端发数据 分片 分段  把很多数据拼在一起
+// concat()
 
-let r = Buffer.from([0x16]); //可以通过数组的方式声明  （10进制是22）
-console.log(r); //<Buffer 16>
+// let r = Buffer.from([0x16]); //可以通过数组的方式声明  （10进制是22）
+// console.log(r); //<Buffer 16>
 
-r.forEach(item => {
-    console.log(item)
-});
+// r.forEach(item => {
+//     console.log(item)
+// });
 
-let buf1 = Buffer.from('珠峰');
-let a = buf1.slice(0,3) // （浅拷贝，拷贝的是引用地址）slice(start,end) start: 规定从何处开始选取，如果是负数，则规定从数组尾部开始算起的位置，-1是最后一个元素。 end:规定从何处结束选取，该参数是结束处的数组下标，如果没有指定参数，是所有的元素，如果是负数，从数组尾部开始算。 
-console.log(a.toString(),buf1.toString())
+// let buf1 = Buffer.from('珠峰');
+// let a = buf1.slice(0,3) // （浅拷贝，拷贝的是引用地址）slice(start,end) start: 规定从何处开始选取，如果是负数，则规定从数组尾部开始算起的位置，-1是最后一个元素。 end:规定从何处结束选取，该参数是结束处的数组下标，如果没有指定参数，是所有的元素，如果是负数，从数组尾部开始算。 
+// console.log(a.toString(),buf1.toString())
+
+// let buf1 = Buffer.from('珠');
+// let buf2 = Buffer.from('峰');
+// let bigbuf = Buffer.alloc(6); //数据的合并
+// Buffer.prototype.copy = function(targetBuffer,targetStart,sourceStart,sourceEnd){
+//     for(let i = 0 ; i < sourceEnd- sourceStart; i++ ){
+//         targetBuffer[targetStart+i] = this[i]  //谁调的copy就指的谁
+//     }
+// }
+// //targetBuffer 目标buffer（拷贝给谁） targetStart 目标开始（拷贝在目标buffer的哪个位置） sourceStart 源的开始(从哪开始拷贝) sourceEnd 源的结束（拷贝到哪里结束）
+// buf1.copy(bigbuf,0,0,3);
+// buf2.copy(bigbuf,buf1.length,0,3);
+// console.log(bigbuf.toString())
+
+var a = Buffer.from('珠峰');
+var b = Buffer.from('目');
+var c= Buffer.concat([a,b],6)
+
+console.log(c.toString())
