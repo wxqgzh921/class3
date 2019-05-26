@@ -16,6 +16,7 @@ console.log(buf.length) //字节的长度
 // toString()
 // 前端给服务端发数据 分片 分段  把很多数据拼在一起
 // concat()
+// split()
 
 // let r = Buffer.from([0x16]); //可以通过数组的方式声明  （10进制是22）
 // console.log(r); //<Buffer 16>
@@ -41,8 +42,37 @@ console.log(buf.length) //字节的长度
 // buf2.copy(bigbuf,buf1.length,0,3);
 // console.log(bigbuf.toString())
 
+Buffer.concat = function(bufferList,len= bufferList.reduce((result,item)=>result+item.length,0)){
+    let buffer = Buffer.alloc(len);
+    let offset = 0;
+    bufferList.forEach( buf => {
+        buf.copy(buffer,offset);
+        offset += buf.length;
+    });
+    return buffer;
+}
 var a = Buffer.from('珠峰');
 var b = Buffer.from('目');
 var c= Buffer.concat([a,b],6)
+console.log(c.toString()) //珠峰
 
-console.log(c.toString())
+
+
+
+Buffer.prototype.split = function(sep){
+    let arr = [];
+    let offset = 0 ;
+    let len = Buffer.from(sep).length;
+    let current ;
+    while(-1 != (current = this.indexOf(sep,offset))){
+        arr.push(this.slice(offset,current));
+        offset = current + len;
+    }
+    arr.push(this.slice(offset))
+    return arr;
+}
+let buf3 = Buffer.from('珠峰猪我你');
+// let i = buf3.indexOf('你');
+// console.log(i);
+console.log(buf3.split('我').toString())
+
