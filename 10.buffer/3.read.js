@@ -5,7 +5,7 @@ let fs = require('fs')
 // 0o666   2 读取  4 写入  1 执行
 
 //读-----------------------------------------
-let buffer = Buffer.alloc(3)
+// let buffer = Buffer.alloc(3)
 // fs.open('./name2.txt','r',(err,fd)=>{  //fd 文件描述符
 //     // console.log(fd)
 //     //fd 文件描述符
@@ -20,22 +20,32 @@ let buffer = Buffer.alloc(3)
 // })
 //写-----------------------------------------
 // let buf1 = Buffer.from('吃饭睡觉打豆豆')
-// fs.open('./name2.txt','w',(err,fd)=>[
+// fs.open('./name2.txt','w',(err,fd)=>{
 //     fs.write(fd,buf1,0,buf1.length,0,(err,written)=>{
 //         // console.log(written)
 //         fs.close(fd,()=>{
 //             console.log('文件关闭成功')
 //         })
 //     })
-// ])
+// })
 
 //-----------------------------------------
-let buf2 = Buffer.from('吃饭睡觉打豆豆')
-fs.open('./name2.txt','r+',(err,fd)=>[
-    fs.write(fd,buf2,0,buf2.length,3,(err,written)=>{
-        // console.log(written)
-        fs.close(fd,()=>{
-            console.log('文件关闭成功')
-        })
+// let buf2 = Buffer.from('吃饭睡觉打豆豆')
+// fs.open('./name2.txt','r+',(err,fd)=>{
+//     fs.write(fd,buf2,0,buf2.length,3,(err,written)=>{
+//         // console.log(written)
+//         fs.close(fd,()=>{
+//             console.log('文件关闭成功')
+//         })
+//     })
+// })
+
+//pipe pipe的原理
+const bufferSize = 3;
+let buffer = Buffer.alloc(bufferSize)
+fs.open('./写入.txt','w',(err,wfd)=>{
+    fs.open('./name2.txt','r',(err,rfd)=>{
+        fs.read(rfd,buffer,0,)
     })
-])
+})
+
