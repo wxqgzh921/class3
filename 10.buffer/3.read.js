@@ -41,11 +41,26 @@ let fs = require('fs')
 // })
 
 //pipe pipe的原理
-const bufferSize = 3;
+const bufferSize = 3; //流的原来  ，读一点写一点
 let buffer = Buffer.alloc(bufferSize)
 fs.open('./写入.txt','w',(err,wfd)=>{
     fs.open('./name2.txt','r',(err,rfd)=>{
-        fs.read(rfd,buffer,0,)
+        let readOffset = 0;
+        function next(){
+            fs.read(rfd,buffer,0,bufferSize,readOffset,(err,bytesRead)=>{
+                if(!bytesRead){
+                    fs.close(rfd,()=>{});
+                    fs.close(wfd,()=>{});
+                    return
+                }
+                readOffset  += bytesRead; //读的时候，每次读取完毕后 偏移量会向后维护偏移量
+                fs.write(wfd,buffer,0,bytesRead,(err,written)=>{
+                    //写的偏移量会自动委维护
+                    next();
+                });
+            });
+        }
+       next();
     })
 })
 
