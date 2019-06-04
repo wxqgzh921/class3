@@ -31,3 +31,5 @@ let o2 = new  Observer('琪琪');
 sub.attach(o1);
 sub.attach(o2);
 sub.setState('生气')
+
+//异步的缺陷  （回调会导致代码的不好维护，导致回调地狱，错误问题 不好捕获错误  不能使用try catch  同步“异步请求” 需要自己维护计数器 代码不优雅 ） 
