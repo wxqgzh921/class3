@@ -6,18 +6,48 @@
 //创建一个promise的时候 ，需提供一个执行器函数 此函数是立即执行
 // 默认是等待态  可以转化成成功态 失败态  状态更改后不能改变状态
 
+// const Promise = require('./promise')
+// let  promise = new Promise(function(reslove,reject){
+//     reject(123)
+//     reslove(456)
+// });
+// console.log(promise) //等待态
+// promise.then(function(value){
+//     console.log('success，'+value)
+// },function(reason){
+//     console.log('fail，'+ reason)
+// })
+
+// promise.then(function(value){
+//     console.log('success，'+value)
+// })
+
+ //2）执行时发生异常
+// const Promise = require('./promise')
+// let  promise = new Promise(function(reslove,reject){
+//     throw new Errow('错误')  //执行时会发生异常
+// });
+// //console.log(promise) //等待态
+// promise.then(function(value){
+//     console.log('success，'+value)
+// },function(reason){
+//     console.log('fail，'+ reason)
+// })
+
+// 3）setTimeout （发布订阅）
 const Promise = require('./promise')
 let  promise = new Promise(function(reslove,reject){
-    reject(123)
-    reslove(456)
+    setTimeout(function(){
+        reslove('成功')
+    },1000)
 });
-console.log(promise) //等待态
 promise.then(function(value){
     console.log('success，'+value)
 },function(reason){
     console.log('fail，'+ reason)
 })
-
-// promise.then(function(value){
-//     console.log('success，'+value)
-// })
+promise.then(function(value){
+    console.log('success，'+value)
+},function(reason){
+    console.log('fail，'+ reason)
+})
