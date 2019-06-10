@@ -1,7 +1,7 @@
 // promise的链式调用
 
 let fs = require('fs')
-let Promise = require('./promise')
+let Promise = require('./promise');
 
 function read(url){
     return new Promise((reslove,reject)=>{
