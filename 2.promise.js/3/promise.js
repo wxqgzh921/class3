@@ -1,7 +1,29 @@
 function reslovePromise(promise2,x,reslove,reject){
     // console.log(promise2)
     // 判断x的类型 如果是常量 则promise成功  如果是promise 则promise的结果
-    if(typeof(x) === ){
+
+    if(promise2 === x){
+        return reject(new TypeError('循环引用'));
+    }
+
+    if( typeof x === "function" || (typeof x === "object" && x != null)){
+        try {
+            let then = x.then();
+            if( typeof then === "function"){
+                then.call(x,y=>{
+                    reslove(x)
+                },r=>{
+                    reject(r)
+                })
+            }else{
+                //如果then不是个function ，则是x是一个普通的对象
+                reslove(x)
+            }
+        } catch (error) {
+           reject(error)
+        }
+    }else{
+        //x是一个常量
         reslove(x)
     }
 }
@@ -43,6 +65,7 @@ class Promise{
                 setTimeout(function(){
                     try {
                         let x = onfulfilled(this.value)
+                        // reslove(x)   //x不一定是个常量 ，有可能是个promises
                         reslovePromise(promise2,x,reslove,reject)
                     } catch (error) {
                         reject(error)
