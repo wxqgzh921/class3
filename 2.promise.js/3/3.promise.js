@@ -14,17 +14,21 @@ function read(url){
 let p1 = new Promise((reslove,reject)=>{
     reslove(100)
 })
-let p2 = p1.then(()=>{
+let promise2 = p1.then(()=>{
     return new Promise((reslove,reject)=>{
         setTimeout(()=>{
-            reslove('成功')
+            reslove(new Promise((reslove,reject)=>{
+                setTimeout(()=>{
+                    reslove(5000)
+                },1000)
+            }))
         },1000)
     })
+    // return data
 },e=>{
     console.log(e)
 })
-console.log(p2)
-p2.then(data=>{
+promise2.then(data=>{
     console.log('data',data);
 },err=>{
     console.log('err',err)

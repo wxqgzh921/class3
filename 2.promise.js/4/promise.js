@@ -1,5 +1,5 @@
 // 判断变量类型  typeof （不能区分array和object）   intanceof （只能区分是否为实例） constructor （判断当前的构造函数 ）Object.toString （无法区分实例）
-function resolvePromise(promise2,x,resolve,reject){
+function reslovePromise(promise2,x,reslove,reject){
     // console.log('promise2',promise2,'x1',x)
     // 判断x的类型 如果是常量 则promise成功  如果是promise 则promise的结果
 
@@ -14,11 +14,11 @@ function resolvePromise(promise2,x,resolve,reject){
             let then = x.then;
             if( typeof then === "function"){
                 then.call(x,y=>{
-                    // y 有可能还是一个promise 调用resolvePromise直到解析出一个常量为止
+                    // y 有可能还是一个promise 调用reslovePromise直到解析出一个常量为止
                     if(called) return
                     called = true;
-                    resolvePromise(promise2,y,resolve,reject)
-                    // resolve(y)
+                    reslovePromise(promise2,y,reslove,reject)
+                    // reslove(y)
                 },r=>{
                     if(called) return
                     called = true;
@@ -26,7 +26,7 @@ function resolvePromise(promise2,x,resolve,reject){
                 })
             }else{
                 //如果then不是个function ，则是x是一个普通的对象
-                resolve(x)
+                reslove(x)
             }
         } catch (error) {
            reject(error)
@@ -35,7 +35,7 @@ function resolvePromise(promise2,x,resolve,reject){
         //x是一个常量
         if(called) return
         called = true;
-        resolve(x)
+        reslove(x)
     }
 }
 
@@ -44,13 +44,13 @@ class Promise{
         this.status = 'pedding';
         this.value;
         this.reason;
-        this.resolveCallbacks = [];
+        this.resloveCallbacks = [];
         this.rejectCallbacks = [];
-        let resolve = (value)=>{
+        let reslove = (value)=>{
             if(this.status == 'pedding'){
                 this.value = value
                 this.status =  'success'
-                this.resolveCallbacks.forEach(fn=>fn())
+                this.resloveCallbacks.forEach(fn=>fn())
             }
         }
         let reject = (reason)=>{
@@ -62,7 +62,7 @@ class Promise{
         }
         //2）执行时发生异常
         try{
-            executor(resolve,reject)
+            executor(reslove,reject)
         }catch(e){
             reject(e)
         }
@@ -74,13 +74,13 @@ class Promise{
         onrejected = typeof onrejected === "function" ? onrejected : err => {throw err};
         let promise2;
         // 调用then后必须返回一个新的promise;;
-        promise2 = new Promise((resolve,reject)=>{
+        promise2 = new Promise((reslove,reject)=>{
             if(this.status == 'success'){
                 setTimeout(()=>{
                     try {
                         let x = onfulfilled(this.value)
-                        // resolve(x)   //x不一定是个常量 ，有可能是个promises
-                        resolvePromise(promise2,x,resolve,reject)
+                        // reslove(x)   //x不一定是个常量 ，有可能是个promises
+                        reslovePromise(promise2,x,reslove,reject)
                     } catch (error) {
                         reject(error)
                     }
@@ -90,18 +90,18 @@ class Promise{
                 setTimeout(()=>{
                     try {
                         let x = onrejected(this.reason)
-                        resolvePromise(promise2,x,resolve,reject)
+                        reslovePromise(promise2,x,reslove,reject)
                     } catch (error) {
                         reject(error)
                     }
                 },0)
             }
             if(this.status == 'pedding'){
-                this.resolveCallbacks.push(()=>{
+                this.resloveCallbacks.push(()=>{
                     setTimeout(() => {
                         try {
                             let x = onfulfilled(this.value)
-                            resolvePromise(promise2,x,resolve,reject)
+                            reslovePromise(promise2,x,reslove,reject)
                         } catch (error) {
                             reject(error)
                         }
@@ -111,7 +111,7 @@ class Promise{
                     setTimeout(()=>{
                         try {
                             let x = onrejected(this.reason)
-                            resolvePromise(promise2,x,resolve,reject)
+                            reslovePromise(promise2,x,reslove,reject)
                         } catch (error) {
                             reject(error)
                         }
@@ -123,12 +123,12 @@ class Promise{
     }
 }
 
-// 测试promise 是否能跑通  暴露一个方法 这个方法必须返回一个对象   对象含有 promise  resolve  reject 
+// 测试promise 是否能跑通  暴露一个方法 这个方法必须返回一个对象   对象含有 promise  reslove  reject 
 
 Promise.defer = Promise.deferred =  function(){
     let dfd ={};
-    dfd.promise = new Promise((resolve,reject)=>{
-        dfd.resolve = resolve;
+    dfd.promise = new Promise((reslove,reject)=>{
+        dfd.reslove = reslove;
         dfd.reject = reject;
     })
     return dfd;
