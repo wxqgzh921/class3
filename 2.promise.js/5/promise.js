@@ -125,9 +125,6 @@ class Promise{
         })
         return promise2;
     }
-    catch(rejectFunc){
-        return this.then(null,rejectFunc);  //cathe的实现
-    }
 }
 
 // 测试promise 是否能跑通  暴露一个方法 这个方法必须返回一个对象   对象含有 promise  resolve  reject 
@@ -140,18 +137,8 @@ Promise.defer = Promise.deferred =  function(){
     })
     return dfd;
 }
-// 直接成功
-Promise.resolve = function(value){
-    return new Promise((resolve,reject)=>{
-        resolve(value)
-    })
-}
-// 直接成功
-Promise.reject = function(reason){
-    return new Promise((resolve,reject)=>{
-        reject(reason)
-    })
-}
+
+
 module.exports =  Promise;
 
 // 全局安装测试工具 npm install promises-aplus-tests -g
