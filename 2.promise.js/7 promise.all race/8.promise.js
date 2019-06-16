@@ -76,8 +76,7 @@ Promise.all = function(values){
         }
         for(let i = 0 ; i < values.length; i++ ){
             let current = values[i];
-            // object  不能写成Object
-            if( typeof current === "function" || (typeof current === "object" && current !== null)){
+            if( typeof current === "function" || (typeof current === "Object" && current !== null)){
                 if( typeof current.then === "function"){
                     current.then(data=>{
                         handleArr(data,i);
