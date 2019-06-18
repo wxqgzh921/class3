@@ -83,7 +83,49 @@ console.log(s3===s4,Symbol.keyFor(s3));  // symbol.keyfor 获取通过for创建�
 
 let obj2 = {
     [Symbol.hasInstance](values){
-        return 'a' instanceof values
+        return 'a' in values
     }
 }
 console.log({a:1} instanceof obj2)
+
+//Symbol.isConcatSpreadable  // 是否展开拼接的
+
+var arr = [1,2,3];
+// console.log([].concat(arr,1,2,3))
+arr[Symbol.isConcatSpreadable] = false
+console.log([].concat(arr,1,2,3))
+
+// match  split search
+
+let obj3 = {
+    [Symbol.match](value){
+        return value.length === 3
+    }
+}
+console.log('abc'.match(obj3))
+
+// species 衍生对象 静态属性
+class myArr extends Array{
+    constructor(...args){
+        super(...args)
+    }
+    // static [Symbol.species]() 这样写就会是静态方法 不是属性 加个get 就可以了 取方法的值 object.defineProperty
+    static get [Symbol.species](){
+        return Array
+    }
+}
+
+var my = new myArr(1,2,3);
+var othermy = my.map(item=>item*=2)   // othermy 是my 的衍生对象
+console.log(othermy)
+console.log(othermy instanceof myArr);
+
+// Symbol.toPrimitive  数据类型转换
+
+let obj = {
+    [Symbol.toPrimitive](type){
+        console.log('type:' , type)
+        return 
+    }
+}
+console.log('obj:',obj++);  //type: number  obj: NaN
