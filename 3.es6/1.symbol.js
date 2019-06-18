@@ -122,10 +122,19 @@ console.log(othermy instanceof myArr);
 
 // Symbol.toPrimitive  数据类型转换
 
-let obj = {
+let obj4= {
     [Symbol.toPrimitive](type){
         console.log('type:' , type)
         return 
     }
 }
-console.log('obj:',obj++);  //type: number  obj: NaN
+console.log('obj:',obj4++);  //type: number  obj: NaN
+
+// Symbol.toStringTag  // 将类型进行更改
+
+let obj5 = {
+    get [Symbol.toStringTag](){
+        return 'string'
+    }
+}
+console.log(Object.prototype.toString.call(obj5));
