@@ -16,3 +16,31 @@ console.log(set.entries()) // set.entries()  键值对  类似于  Object.entrie
 // console.log(Object.entries(obj))
 
 // 实现数组的并集 交集 差集
+let arr1 = [1,2,3,5,5,6]
+let arr2 = [1,2,3,4]
+// 并集
+//  function union(arr1,arr2){
+//     let result = new Set([...arr1,...arr2])
+//     return [...result];
+//  }
+//  console.log(union(arr1,arr2))
+
+// 交集 
+// function interator(arr1,arr2){
+//     let arr2set = new Set(arr2);
+//     return [...arr1.reduce((reuslt,item)=>{
+//         if(arr2set.has(item)){
+//             reuslt.add(item)
+//         }
+//         return reuslt
+//     },new Set)]
+
+//  }
+// 交集的另一种写法 （差集就是把交集has取非）
+function interator(arr1,arr2){
+    let a2 = new Set(arr2);
+    return [...new Set(arr1.filter(item=>{
+        return !a2.has(item)
+    }))]
+}
+ console.log(interator(arr1,arr2))
