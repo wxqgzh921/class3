@@ -138,3 +138,14 @@ let obj5 = {
     }
 }
 console.log(Object.prototype.toString.call(obj5));
+
+// Symbol.unscopables  不在作用域中
+let arr1 = [];
+// with({name:1}){
+//     console.log(name)
+// }
+console.log(arr1[Symbol.unscopables])  // 看 数组的哪些方法是否在arr的作用域内
+with(arr1){  // 数组的方法 foreach 
+    console.log(forEach)
+    console.log(keys)
+}
