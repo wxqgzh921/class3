@@ -30,4 +30,12 @@ let object={name:1,obj1:{name:2},function(){}}
 let r = JSON.parse(JSON.stringify(object)) // 纯对象没有问题
 console.log(r)   // function会丢了，不是对象的都会丢了或者出错
 
-// 递归拷贝
+// 递归拷贝 //深度拷贝  
+
+function deepclone(obj){
+    // 遇到null , date reg 都直接返回
+    if(obj == null) return obj
+    if(typeof obj !== 'object' ) return obj
+}
+let obj = {'name':1,'age':2}
+deepclone()

@@ -44,3 +44,15 @@ function interator(arr1,arr2){
     }))]
 }
  console.log(interator(arr1,arr2))
+
+ // 内存泄露  浏览器中 垃圾回收机制 标记清楚 当前的变量有没有被引用
+let map = new Map([['a','1'],['b','2'],['a','100']]);  // 二维数组
+let obj = {name:1}
+map.set('c',1)  //set 既可以放数字又可以放对象  会造成内存泄露
+// map.set({name:1},1)
+map.set(obj,1);
+obj = null
+console.log(map);
+
+//深度拷贝  
+
