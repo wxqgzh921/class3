@@ -20,11 +20,14 @@ let an = new Animal;
 // console.log(Animal.prototype.__proto__ === Object.prototype)  //true
 
 function Tiger(){
-    Animal.call(this)
+    Animal.call(this) //继承实例上的属性
 }
 let tiger = new Tiger;
+
+//可以实现继承  继承公有属性
 // Tiger.prototype.__proto__ = Animal.prototype
 //     ||
-Object.setPrototypeOf(Tiger.prototype,Animal.prototype)
+// Object.setPrototypeOf(Tiger.prototype,Animal.prototype)
+Tiger.prototype = Object.create(Animal.prototype)  //可以实现继承  继承公有属性
 tiger.eat()
 console.log(tiger.type)
