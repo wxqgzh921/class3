@@ -22,12 +22,24 @@ let an = new Animal;
 function Tiger(){
     Animal.call(this) //继承实例上的属性
 }
+function create(parentPrototype){
+    let Fn = function(){}
+    Fn.prototype = parentPrototype
+    // return new Fn()
+    let fn = new Fn()
+    fn.constructor = Tiger
+    return fn
+}
+// Tiger.prototype = create(Animal.prototype)
+Tiger.prototype = Object.create(Animal.prototype,{constructor:{value:'Tiger'}})
+// Tiger.prototype = Object.create(Animal.prototype)
 let tiger = new Tiger;
 
 //可以实现继承  继承公有属性
 // Tiger.prototype.__proto__ = Animal.prototype
 //     ||
 // Object.setPrototypeOf(Tiger.prototype,Animal.prototype)
-Tiger.prototype = Object.create(Animal.prototype)  //可以实现继承  继承公有属性
+// Tiger.prototype = Object.create(Animal.prototype)  //可以实现继承  继承公有属性
 tiger.eat()
-console.log(tiger.type)
+console.log(tiger.constructor)
+// console.log(tiger.type)
