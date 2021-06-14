@@ -35,3 +35,6 @@ var obj = {
 obj.myfun.call(obj2,'吃苹果','打游戏') //小李,30,喜欢吃苹果和打游戏
 obj.myfun.apply(obj2,['吃苹果','打游戏'])//小李,30,喜欢吃苹果和打游戏
 obj.myfun.bind(obj2,'吃苹果','打游戏')()//小李,30,喜欢吃苹果和打游戏
+
+
+///vdsvsvsdv
