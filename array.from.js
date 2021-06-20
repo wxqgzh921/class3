@@ -13,3 +13,13 @@ console.log(Array.from(mapper.keys())); //['1','2']
 const setter = new Set([1,2,3,4,2,6,7]);
 console.log(setter);  // {1,2,3,4,6,7}   
 console.log(Array.from(setter)); //[1,2,3,4,6,7]
+
+
+// 伪数组样式
+var falsearr = {
+    "0":"name",
+    "1":"age",
+    "2":"hobby",
+    length:3
+}
+Array.from(falsearr)  // ["name","age","hobby"]
