@@ -14,7 +14,7 @@ var ap = 'hello';
 function ab(){
     return this.ap;  //this指向全局window
 }
-ab();//hello
+ab();//hello888
 
 var obj2 = {
     name:'小李',
